@@ -23,7 +23,6 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
-			'model.sample-portal-new-instance.php'
 		),
 		'webservice' => array(
 			
