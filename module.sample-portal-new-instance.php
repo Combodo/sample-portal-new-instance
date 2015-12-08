@@ -9,8 +9,8 @@ SetupWebPage::AddModule(
 	array(
 		// Identification
 		//
-		'label' => 'Sample Portal (new instance)',
-		'category' => 'portal',
+		'label' => 'Sample Portal (New instance)',
+    'category' => 'portal',
 
 		// Setup
 		//
