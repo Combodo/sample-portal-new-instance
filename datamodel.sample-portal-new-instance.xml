@@ -1,108 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3">
-  <portals>
-        <portal id="sample-portal-new-instance" _delta="define">
-            <url>pages/exec.php?exec_module=sample-portal-new-instance&amp;exec_page=index.php</url>
-            <rank>2.0</rank>
-            <handler/>
-            <allow>
-            </allow>
-            <deny/>
-        </portal>
-    </portals>
-    <module_designs>
+	<portals>
+		<portal id="sample-portal-new-instance" _delta="define">
+			<url>pages/exec.php?exec_module=sample-portal-new-instance&amp;exec_page=index.php</url>
+			<rank>2.0</rank>
+			<handler/>
+			<allow>
+			</allow>
+			<deny/>
+		</portal>
+	</portals>
+	<module_designs>
 		<module_design id="sample-portal-new-instance" xsi:type="portal" _delta="define">
 			<properties>
-				<directory>/portal-directory</directory>
 				<name>Portal:Instance:Name</name>
 			</properties>
 			<bricks>
-                <brick id="communication" xsi:type="Combodo\iTop\Portal\Brick\CommunicationBrick">
-                  <active>yes</active>
-                  <rank>1</rank>
-                  <width>10</width>
-                  <templates>
-                    <template id="tile">itop-portal-base/portal/src/views/bricks/communication/tile.html.twig</template>
-                  </templates>
-                  <title>Brick:Portal:Communication:Name</title>
-                </brick>
-                <brick id="user-profile" xsi:type="Combodo\iTop\Portal\Brick\UserProfileBrick">
-                    <active>yes</active>
-                    <rank>2</rank>
-                    <width>2</width>
-                    <title>Brick:Portal:UserProfile:Name</title>
-                </brick>
-                <brick id="internal-directory" xsi:type="Combodo\iTop\Portal\Brick\BrowseBrick">
-                    <active>yes</active>
-                    <rank>3</rank>
-                    <width>6</width>
-                    <title>Brick:Portal:InternalDirectory:Title</title>
-                    <levels>
-                        <level id="1">
-                            <oql><![CDATA[SELECT t FROM Team AS t JOIN Organization AS o ON t.org_id=o.id WHERE o.name = 'My Company/Department' ]]></oql>
-                            <title>Class:Team</title>
-                            <levels>
-                                <level id="1">
-                                    <oql><![CDATA[SELECT l FROM lnkPersonToTeam AS l]]></oql>
-                                    <parent_att>team_id</parent_att>
-                                    <name_att>person_id_friendlyname</name_att>
-                                    <title>Class:Person</title>
-                                    <actions>
-                                        <action id="view" />
-                                        <action id="edit" />
-                                    </actions>
-                                </level>
-                            </levels>
-                        </level>
-                    </levels>
-                    <browse_modes>
-                        <availables>
-                            <mode id="list" />
-                        </availables>
-                    </browse_modes>
-                    <data_loading>full</data_loading>
-                </brick>
-                <brick id="external-directory" xsi:type="Combodo\iTop\Portal\Brick\BrowseBrick">
-                    <active>yes</active>
-                    <rank>4</rank>
-                    <width>6</width>
-                    <title>Brick:Portal:ExternalDirectory:Title</title>
-                    <levels>
-                        <level id="1">
-                            <oql><![CDATA[SELECT Organization AS o WHERE o.name != 'My Company/Department' ]]></oql>
-                            <title>Class:Organization</title>
-                            <levels>
-                                <level id="1">
-                                    <class>Team</class>
-                                    <parent_att>org_id</parent_att>
-                                    <title>Class:Team</title>
-                                    <levels>
-                                        <level id="1">
-                                            <oql><![CDATA[SELECT l FROM lnkPersonToTeam AS l]]></oql>
-                                            <parent_att>team_id</parent_att>
-                                            <name_att>person_id_friendlyname</name_att>
-                                            <tooltip_att>email</tooltip_att>
-                                            <title>Class:Person</title>
-                                            <actions>
-                                                <action id="view" />
-                                                <action id="edit" />
-                                            </actions>
-                                        </level>
-                                    </levels>
-                                </level>
-                            </levels>
-                        </level>
-                    </levels>
-                    <browse_modes>
-                        <availables>
-                            <mode id="list" />
-                            <mode id="tree" />
-                        </availables>
-                        <default>tree</default>
-                    </browse_modes>
-                    <data_loading>full</data_loading>
-                </brick>
-            </bricks>
+				<brick id="user-profile" xsi:type="Combodo\iTop\Portal\Brick\UserProfileBrick">
+					<active>yes</active>
+					<rank>
+						<default>2</default>
+					</rank>
+					<title>
+						<default>Brick:Portal:UserProfile:Name</default>
+					</title>
+					<decoration_class>
+						<default>fa fa-user fa-2x</default>
+					</decoration_class>
+				</brick>
+				<brick id="internal-directory" xsi:type="Combodo\iTop\Portal\Brick\BrowseBrick">
+					<active>yes</active>
+					<rank>
+						<default>3</default>
+					</rank>
+					<width>6</width>
+					<title>
+						<default>Brick:Portal:InternalDirectory:Title</default>
+					</title>
+					<levels>
+						<level id="1">
+							<oql><![CDATA[SELECT t FROM Team AS t JOIN Organization AS o ON t.org_id=o.id WHERE o.name = 'My Company/Department' ]]></oql>
+							<title>Class:Team</title>
+							<levels>
+								<level id="1">
+									<oql><![CDATA[SELECT l FROM lnkPersonToTeam AS l]]></oql>
+									<parent_att>team_id</parent_att>
+									<name_att>person_id_friendlyname</name_att>
+									<title>Class:Person</title>
+									<actions>
+										<action id="view" xsi:type="view" />
+										<action id="edit" xsi:type="edit" />
+									</actions>
+								</level>
+							</levels>
+						</level>
+					</levels>
+					<browse_modes>
+						<availables>
+							<mode id="list" />
+						</availables>
+					</browse_modes>
+					<data_loading>full</data_loading>
+				</brick>
+				<brick id="external-directory" xsi:type="Combodo\iTop\Portal\Brick\BrowseBrick">
+					<active>yes</active>
+					<rank>
+						<default>4</default>
+					</rank>
+					<width>6</width>
+					<title>
+						<default>Brick:Portal:ExternalDirectory:Title</default>
+					</title>
+					<levels>
+						<level id="1">
+							<oql><![CDATA[SELECT Organization AS o WHERE o.name != 'My Company/Department' ]]></oql>
+							<title>Class:Organization</title>
+							<levels>
+								<level id="1">
+									<class>Team</class>
+									<parent_att>org_id</parent_att>
+									<title>Class:Team</title>
+									<levels>
+										<level id="1">
+											<oql><![CDATA[SELECT l FROM lnkPersonToTeam AS l]]></oql>
+											<parent_att>team_id</parent_att>
+											<name_att>person_id_friendlyname</name_att>
+											<tooltip_att>email</tooltip_att>
+											<title>Class:Person</title>
+											<actions>
+												<action id="view" xsi:type="view" />
+												<action id="edit" xsi:type="edit" />
+											</actions>
+										</level>
+									</levels>
+								</level>
+							</levels>
+						</level>
+					</levels>
+					<browse_modes>
+						<availables>
+							<mode id="list" />
+							<mode id="tree" />
+						</availables>
+						<default>tree</default>
+					</browse_modes>
+					<data_loading>full</data_loading>
+				</brick>
+			</bricks>
 		</module_design>
 	</module_designs>
 	<module_parameters>
