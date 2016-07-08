@@ -7,7 +7,10 @@
  */
 
 Dict::Add('EN US', 'English', 'English', array(
-    'Brick:Portal:InternalDirectory:Title' => 'Internal directory',
-    'Brick:Portal:ExternalDirectory:Title' => 'Customers directory',
+	'portal:sample-portal-new-instance' => 'Company directories',
+	'Brick:Portal:InternalDirectory:Title' => 'Internal directory',
+	'Brick:Portal:InternalDirectory:Title+' => 'Find contact informations about your co-workers',
+	'Brick:Portal:ExternalDirectory:Title' => 'Customers directory',
+	'Brick:Portal:ExternalDirectory:Title+' => 'Find contact information about customers',
 ));
 ?>

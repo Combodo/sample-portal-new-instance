@@ -17,16 +17,36 @@
 			</properties>
 			<bricks>
 				<brick id="user-profile" xsi:type="Combodo\iTop\Portal\Brick\UserProfileBrick">
-					<active>yes</active>
 					<rank>
-						<default>2</default>
+						<default>1</default>
 					</rank>
 					<title>
-						<default>Brick:Portal:UserProfile:Name</default>
+						<default>Brick:Portal:UserProfile:Navigation:Dropdown:MyProfil</default>
 					</title>
 					<decoration_class>
 						<default>fa fa-user fa-2x</default>
 					</decoration_class>
+					<form>
+						<fields/>
+						<twig>
+							<div class="form_field" data-field-id="first_name" data-field-flags="read_only">
+							</div>
+							<div class="form_field" data-field-id="name" data-field-flags="read_only">
+							</div>
+							<div class="form_field" data-field-id="org_id" data-field-flags="read_only">
+							</div>
+							<div class="form_field" data-field-id="email" data-field-flags="read_only">
+							</div>
+							<div class="form_field" data-field-id="phone">
+							</div>
+							<div class="form_field" data-field-id="location_id">
+							</div>
+							<div class="form_field" data-field-id="function">
+							</div>
+							<div class="form_field" data-field-id="manager_id" data-field-flags="read_only">
+							</div>
+						</twig>
+					</form>
 				</brick>
 				<brick id="internal-directory" xsi:type="Combodo\iTop\Portal\Brick\BrowseBrick">
 					<active>yes</active>
@@ -37,9 +57,13 @@
 					<title>
 						<default>Brick:Portal:InternalDirectory:Title</default>
 					</title>
+					<description>Brick:Portal:InternalDirectory:Title+</description>
+					<decoration_class>
+						<default>fa fa-sitemap fa-2x</default>
+					</decoration_class>
 					<levels>
 						<level id="1">
-							<oql><![CDATA[SELECT t FROM Team AS t JOIN Organization AS o ON t.org_id=o.id WHERE o.name = 'My Company/Department' ]]></oql>
+							<oql><![CDATA[SELECT t FROM Team AS t JOIN Organization AS o ON t.org_id=o.id WHERE o.id = :current_contact->org_id ]]></oql>
 							<title>Class:Team</title>
 							<levels>
 								<level id="1">
@@ -71,9 +95,13 @@
 					<title>
 						<default>Brick:Portal:ExternalDirectory:Title</default>
 					</title>
+					<description>Brick:Portal:ExternalDirectory:Title+</description>
+					<decoration_class>
+						<default>fa fa-users fa-2x</default>
+					</decoration_class>
 					<levels>
 						<level id="1">
-							<oql><![CDATA[SELECT Organization AS o WHERE o.name != 'My Company/Department' ]]></oql>
+							<oql><![CDATA[SELECT Organization AS o WHERE o.id != :current_contact->org_id ]]></oql>
 							<title>Class:Organization</title>
 							<levels>
 								<level id="1">
@@ -85,7 +113,6 @@
 											<oql><![CDATA[SELECT l FROM lnkPersonToTeam AS l]]></oql>
 											<parent_att>team_id</parent_att>
 											<name_att>person_id_friendlyname</name_att>
-											<tooltip_att>email</tooltip_att>
 											<title>Class:Person</title>
 											<actions>
 												<action id="view" xsi:type="view" />
@@ -107,6 +134,57 @@
 					<data_loading>full</data_loading>
 				</brick>
 			</bricks>
+			<classes>
+				<class id="Organization">
+					<scopes>
+						<scope id="all">
+							<oql_view><![CDATA[SELECT Organization]]></oql_view>
+						</scope>
+					</scopes>
+				</class>
+				<class id="Team">
+					<scopes>
+						<scope id="all">
+							<oql_view><![CDATA[SELECT Team]]></oql_view>
+						</scope>
+					</scopes>
+				</class>
+				<class id="lnkPersonToTeam">
+					<scopes>
+						<scope id="all">
+							<oql_view><![CDATA[SELECT lnkPersonToTeam]]></oql_view>
+						</scope>
+					</scopes>
+				</class>
+				<class id="Contact">
+					<scopes>
+						<scope id="all">
+							<oql_view><![CDATA[SELECT Contact WHERE org_id = :current_contact->org_id]]></oql_view>
+						</scope>
+						<scope id="all">
+							<oql_view><![CDATA[SELECT Contact]]></oql_view>
+							<allowed_profiles>
+								<allowed_profile id="Administrator"/>
+							</allowed_profiles>
+						</scope>
+					</scopes>
+					<lists>
+						<list id="default">
+							<items>
+								<item id="status">
+									<rank>10</rank>
+								</item>
+								<item id="org_id">
+									<rank>20</rank>
+								</item>
+								<item id="function">
+									<rank>50</rank>
+								</item>
+							</items>
+						</list>
+					</lists>
+				</class>
+			</classes>
 		</module_design>
 	</module_designs>
 	<module_parameters>
