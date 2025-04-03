@@ -1,1 +1,0 @@
-Note: This sample is intend for iTop 2.3.x only.
